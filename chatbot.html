@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .chat-container {
+      width: 400px;
+      max-width: 95%;
+      height: 70vh;
+      max-height: 600px;
+      background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(10px); /* Frosted glass effect */
+      border: none;
+    }
+
+    .chat-window {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background: transparent;
+      color: #333;
+    }
+
+    .message {
+      margin: 8px 0;
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 80%;
+      word-wrap: break-word;
+      font-size: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #0078d4;
+      color: #ffffff;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: rgba(240, 240, 240, 0.9);
+      color: #333;
+    }
+
+    .input-container {
+      display: flex;
+      padding: 10px;
+      background: transparent;
+      gap: 10px;
+    }
+
+    .input-container input {
+      flex: 1;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #333;
+      padding: 12px;
+      border-radius: 8px;
+      outline: none;
+      font-family: inherit;
+      border: none;
+      transition: border 0.3s;
+    }
+
+    .input-container button {
+      padding: 12px 18px;
+      background-color: #0078d4;
+      color: #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      transition: background 0.3s;
+    }
+
+    .input-container button:hover {
+      background-color: #005bb5;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .chat-container {
+        height: 80vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .chat-container {
+        height: 85vh;
+      }
+
+      .input-container input {
+        font-size: 14px;
+      }
+
+      .input-container button {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+    <div class="chat-window" id="chat-window"></div>
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const inputField = document.getElementById("user-input");
+    const chatWindow = document.getElementById("chat-window");
+
+    window.onload = function() {
+      const welcomeMessage = document.createElement("div");
+      welcomeMessage.className = "message bot";
+      welcomeMessage.textContent = "Hello! I'm RoboDot, your assistant. How can I help you today?";
+      chatWindow.appendChild(welcomeMessage);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    };
+
+    async function sendMessage() {
+      const message = inputField.value.trim();
+      if (!message) return;
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.textContent = message;
+      chatWindow.appendChild(userMsg);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+      inputField.value = "";
+
+      try {
+        const response = await fetch("http://127.0.0.1:5005/webhooks/rest/webhook", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sender: "user", message })
+        });
+
+        const botMessages = await response.json();
+        botMessages.forEach((msg) => {
+          const botMsg = document.createElement("div");
+          botMsg.className = "message bot";
+          botMsg.textContent = msg.text;
+          chatWindow.appendChild(botMsg);
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+        });
+      } catch {
+        const errorMsg = document.createElement("div");
+        errorMsg.className = "message bot";
+        errorMsg.textContent = "⚠️ ERROR: Unable to connect to the server.";
+        chatWindow.appendChild(errorMsg);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+    }
+
+    inputField.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
