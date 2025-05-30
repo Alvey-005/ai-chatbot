@@ -854,7 +854,7 @@ input[type=number] {
     overflow-y: auto;
     padding-right: 10px;
     scrollbar-width: thin;
-    scrollbar-color: #4CAF50 #f1f1f1;
+    scrollbar-color: var(--primary-color) #f1f1f1;
 }
 
 .messages::-webkit-scrollbar {
@@ -862,7 +862,7 @@ input[type=number] {
 }
 
 .messages::-webkit-scrollbar-thumb {
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
     border-radius: 4px;
 }
 
@@ -881,11 +881,18 @@ input[type=number] {
 }
 
 .message.user {
-    background-color: #0078d4;
+    background-color: var(--primary-color);
     color: white;
     align-self: flex-end;
     margin-left: auto;
     margin-right: 10px;
+}
+.message.admin {
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
+    align-self: flex-start;
+    margin-left: 10px;
+    /* border-left: 1px solid var(--primary-color); */
 }
 
 .message.bot {
