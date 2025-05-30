@@ -306,6 +306,19 @@
         sendMessage();
       }
     });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 50) { // Change color after 50px scroll
+        header.style.backgroundColor = 'white'; // Change to your desired color
+      }else if(scrollPosition < 50){
+        header.style.backgroundColor = 'transparent'; // Reset to original color
+      } else {
+        header.style.backgroundColor = 'transparent'; // Reset to original color
+      }
+    });
   </script>
 </body>
 
