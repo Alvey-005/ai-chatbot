@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Responsive Personal Portfolio</title>
+  <title>RoboDot | Reddot AI chatbot</title>
 
   <link rel="stylesheet" href="style.css" />
 
@@ -22,8 +22,8 @@
     <a href="#" class="logo">
       <img src="/images/logo.svg" alt="RoboDot Logo" />
 
-    <div class="bx bx-menu" id="menu-icon">
-    </div>
+    <!-- <div class="bx bx-menu" id="menu-icon">
+    </div> -->
 
     <nav class="navbar" id="navbar">
       <a href="#home" class="active" onclick="setActiveNav(this)">Home</a>
@@ -217,10 +217,18 @@
 
 
     function switchToAgent() {
-    usingBot = false;
-    addMessageToChat('You are now connected to a human agent.','bot');
-    document.getElementById('admin-button').disabled = true;
-  }
+      usingBot = !usingBot; // Toggle the boolean value
+      const adminButton = document.getElementById('admin-button').querySelector('img');
+      if (!usingBot) {
+        addMessageToChat('You are now connected to a human agent.', 'bot');
+        adminButton.src = "/images/bot.png"; // Switch to agent image
+        adminButton.alt = "Agent";
+      } else {
+        addMessageToChat('You are now connected to the bot.', 'bot');
+        adminButton.src = "/images/support_1.png"; // Switch back to bot image
+        adminButton.alt = "Support";
+      }
+    }
 
     async function sendMessage() {
       const message = inputField.value.trim();
@@ -273,10 +281,10 @@
       sendMessage();
     });
 
-    document.getElementById('admin-button').addEventListener('click', () => {
-      usingBot = false;
-      sendMessage();
-    });
+    // document.getElementById('admin-button').addEventListener('click', () => {
+    //   usingBot = false;
+    //   sendMessage();
+    // });
 
     function setActiveNav(element) {
       const links = document.querySelectorAll("#navbar a");
