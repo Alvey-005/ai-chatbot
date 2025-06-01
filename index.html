@@ -161,7 +161,7 @@
       <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off"
         onkeypress="if(event.key === 'Enter') sendMessage()" />
       <button onclick="sendMessage()" id="bot-button">Send</button>
-      <button onclick="switchToAgent()" background-color: white;" id="admin-button"><img src="/images/support_1.png" alt="Support" /></button>
+      <button onclick="switchToAgent()" style="background-color: white;" id="admin-button"><img src="/images/call-center.png" alt="Support" /></button>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"></script>
@@ -221,11 +221,11 @@
       const adminButton = document.getElementById('admin-button').querySelector('img');
       if (!usingBot) {
         addMessageToChat('You are now connected to a human agent.', 'bot');
-        adminButton.src = "/images/bot.png"; // Switch to agent image
+        adminButton.src = "/images/chatbot.png"; // Switch to agent image
         adminButton.alt = "Agent";
       } else {
         addMessageToChat('You are now connected to the bot.', 'bot');
-        adminButton.src = "/images/support_1.png"; // Switch back to bot image
+        adminButton.src = "/images/call-center.png"; // Switch back to bot image
         adminButton.alt = "Support";
       }
     }
