@@ -1,4 +1,3 @@
-
 /* =================== IMPORTS & RESET =================== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800;900&display=swap');
 
@@ -853,54 +852,165 @@ input[type=number] {
 .messages {
     height: 100%;
     overflow-y: auto;
-    padding-right: 10px;
+    padding: 15px;
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.messages::-webkit-scrollbar {
-    width: 8px;
+.message-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 85%;
 }
 
-.messages::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 4px;
+.message-wrapper.user-wrapper {
+    margin-left: auto;
+    flex-direction: row-reverse;
 }
 
-.messages::-webkit-scrollbar-track {
-    background: #f1f1f1;
+.message-wrapper.admin-wrapper,
+.message-wrapper.bot-wrapper {
+    margin-right: auto;
 }
 
 .message {
-    margin: 8px 0;
-    padding: 10px;
-    border-radius: 8px;
-    max-width: 80%;
-    word-wrap: break-word;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 8px 12px;
+    border-radius: 18px;
     font-size: 14px;
+    line-height: 1.4;
+    position: relative;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sender-name {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.message-text {
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 .message.user {
     background-color: var(--primary-color);
     color: white;
-    align-self: flex-end;
+    border-top-right-radius: 4px;
     margin-left: auto;
-    margin-right: 10px;
 }
+
 .message.admin {
     background-color: var(--primary-color-light);
     color: var(--primary-color);
-    align-self: flex-start;
-    margin-left: 10px;
-    /* border-left: 1px solid var(--primary-color); */
+    border-top-left-radius: 4px;
+}
+
+.message.admin .sender-name {
+    color: var(--primary-color);
 }
 
 .message.bot {
-    background-color: #e5e5e5;
+    background-color: #f5f5f5;
     color: #333;
-    align-self: flex-start;
-    margin-left: 10px;
+    border-top-left-radius: 4px;
+}
+
+.message.bot .sender-name {
+    color: #666;
+}
+
+.message.system {
+    background-color: #e4e6eb;
+    color: #65676b;
+    border-radius: 18px;
+    font-style: italic;
+    text-align: center;
+    margin: 8px auto;
+    max-width: 90%;
+}
+
+.message-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+
+
+
+.message-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #fff;
+}
+
+/* Update message wrapper styles */
+.message-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 85%;
+    margin-bottom: 12px;
+}
+
+.message-wrapper.user-wrapper {
+    margin-left: auto;
+    flex-direction: row-reverse;
+}
+
+.message-wrapper.admin-wrapper,
+.message-wrapper.bot-wrapper {
+    margin-right: auto;
+}
+
+/* Add hover effect for messages */
+.message-wrapper:hover .message-icon {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* Update chat container background */
+.chat-body {
+    padding: 10px;
+}
+
+.messages {
+    padding: 15px;
+}
+
+/* Remove old message styles */
+.message.user,
+.message.admin,
+.message.bot {
+    margin: 0;
+    box-shadow: none;
+}
+
+/* Update scrollbar styles */
+.messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: #ccd0d5;
+    border-radius: 3px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .input-container {
